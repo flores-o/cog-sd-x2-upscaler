@@ -1,8 +1,8 @@
-# Stable Diffusion v2 Cog model
+# Stable Diffusion x2 latent upscaler Cog model
 
-[![Replicate](https://replicate.com/stability-ai/stable-diffusion/badge)](https://replicate.com/stability-ai/stable-diffusion) 
 
-This is an implementation of the [Diffusers Stable Diffusion v2.1](https://huggingface.co/stabilityai/stable-diffusion-2-1) as a Cog model. [Cog packages machine learning models as standard containers.](https://github.com/replicate/cog)
+
+This is an implementation of the [Stable Diffusion x2 latent upscaler](https://huggingface.co/stabilityai/sd-x2-latent-upscaler) as a Cog model. [Cog packages machine learning models as standard containers.](https://github.com/replicate/cog)
 
 First, download the pre-trained weights:
 
@@ -10,5 +10,5 @@ First, download the pre-trained weights:
 
 Then, you can run predictions:
 
-    cog predict -i prompt="monkey scuba diving"
-# stabilityai/sd-x2-latent-upscaler
+    cog predict -i image=@input_image.png
+
