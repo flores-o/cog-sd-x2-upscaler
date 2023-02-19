@@ -1,4 +1,4 @@
-# Stable Diffusion x2 latent upscaler Cog model
+# Stable Diffusion Upscaler Cog model
 
 
 
