@@ -56,12 +56,8 @@ class Predictor(BasePredictor):
         scheduler: str = Input(
             default="K_EULER",
             choices=[
-                "DDIM",
                 "K_EULER",
-                "DPMSolverMultistep",
                 "K_EULER_ANCESTRAL",
-                "PNDM",
-                "KLMS",
             ],
             description="Choose a scheduler.",
         ),
