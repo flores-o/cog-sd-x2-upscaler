@@ -1,0 +1,24 @@
+
+Latency: 5.8905 seconds
+Memory: 430.23 MB
+
+self.pipe = (... torch_dtype=torch.float16
+Latency: 5.6431 seconds
+Memory: 1268.27 MB
+
+Latency: 5.8688 seconds
+Memory: 429.27 MB
+
+self.pipe = (... torch_dtype=torch.float16 
+Latency: 5.9152 seconds
+
+self.pipe = (... torch_dtype=torch.float16 
+Latency: 5.9044 seconds
+
+self.pipe = (... torch_dtype=torch.float16 
+Latency: 5.9229 seconds
+Memory: 429.84 MB
+
+self.pipe = (... torch_dtype=torch.float16 
+Latency: 5.9413 seconds
+Memory: 425.73 MB
