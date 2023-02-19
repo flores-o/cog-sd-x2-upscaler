@@ -22,3 +22,8 @@ Memory: 429.84 MB
 self.pipe = (... torch_dtype=torch.float16 
 Latency: 5.9413 seconds
 Memory: 425.73 MB
+
+with xformers 
+self.pipe = (... torch_dtype=torch.float16 
+Latency: 5.8370 seconds
+Memory: 1270.08 MB

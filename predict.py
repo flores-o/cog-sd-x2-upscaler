@@ -37,7 +37,7 @@ class Predictor(BasePredictor):
             safety_checker=safety_checker,
             cache_dir=MODEL_CACHE,
             local_files_only=True,
-            #torch_dtype=torch.float16,
+            torch_dtype=torch.float16,
         ).to("cuda")
 
     @torch.inference_mode()
@@ -106,6 +106,7 @@ class Predictor(BasePredictor):
         
         with open('performance_measurement.txt', 'a') as f:
             f.write(f"\n")
+            f.write(f"with xformers \n")
             f.write(f"self.pipe = (... torch_dtype=torch.float16 \n")
             f.write(f"Latency: {latency:.4f} seconds\n")
 
