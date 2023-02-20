@@ -80,26 +80,8 @@ class Predictor(BasePredictor):
 
         generator = torch.Generator("cuda").manual_seed(seed)
 
-
-        # Measure the memory usage before inference
-        import psutil
-        process = psutil.Process()
-        mem_before = process.memory_info().rss / 1024 / 1024  # in MB
-
-        device = torch.device("cuda")
-        print(f"====================================================================================")
-        print(f"GPU Memory allocated: {torch.cuda.memory_allocated(device) / 1024**2:.2f} MB")
-        print(f"GPU Max memory allocated: {torch.cuda.max_memory_allocated(device) / 1024**2:.2f} MB")
-        print(f"GPU Memory reserved: {torch.cuda.memory_reserved(device) / 1024**2:.2f} MB")
-        print(f"====================================================================================")
-
-
-
         # Memory Efficient Attention
         self.pipe.enable_xformers_memory_efficient_attention()
-
-        import time
-        start_time = time.time()
 
         output = self.pipe(
             prompt=prompt,
@@ -108,22 +90,6 @@ class Predictor(BasePredictor):
             generator=generator,
             num_inference_steps=num_inference_steps,
         )
-
-        end_time = time.time()
-        latency = end_time - start_time
-        print(f"Latency: {latency:.4f} seconds")
-        
-
-        # Measure the CPU memory usage after inference
-        mem_after = process.memory_info().rss / 1024 / 1024  # in MB
-        mem_used = mem_after - mem_before
-        
-        print(f"====================================================================================")
-        print(f"CPU Memory used: {mem_used:.2f} MB")
-        print(f"GPU Memory allocated: {torch.cuda.memory_allocated(device) / 1024**2:.2f} MB")
-        print(f"GPU Max memory allocated: {torch.cuda.max_memory_allocated(device) / 1024**2:.2f} MB")
-        print(f"GPU Memory reserved: {torch.cuda.memory_reserved(device) / 1024**2:.2f} MB")
-        print(f"====================================================================================")
 
         output_paths = []
         for i, sample in enumerate(output.images):
