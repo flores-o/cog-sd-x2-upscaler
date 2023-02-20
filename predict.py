@@ -81,10 +81,19 @@ class Predictor(BasePredictor):
         generator = torch.Generator("cuda").manual_seed(seed)
 
 
-        import psutil
         # Measure the memory usage before inference
+        import psutil
         process = psutil.Process()
         mem_before = process.memory_info().rss / 1024 / 1024  # in MB
+
+        device = torch.device("cuda")
+        print(f"====================================================================================")
+        print(f"GPU Memory allocated: {torch.cuda.memory_allocated(device) / 1024**2:.2f} MB")
+        print(f"GPU Max memory allocated: {torch.cuda.max_memory_allocated(device) / 1024**2:.2f} MB")
+        print(f"GPU Memory reserved: {torch.cuda.memory_reserved(device) / 1024**2:.2f} MB")
+        print(f"====================================================================================")
+
+
 
         # Memory Efficient Attention
         self.pipe.enable_xformers_memory_efficient_attention()
@@ -104,34 +113,17 @@ class Predictor(BasePredictor):
         latency = end_time - start_time
         print(f"Latency: {latency:.4f} seconds")
         
-        with open('performance_measurement.txt', 'a') as f:
-            f.write(f"\n")
-            f.write(f"with xformers \n")
-            f.write(f"self.pipe = (... torch_dtype=torch.float16 \n")
-            f.write(f"Latency: {latency:.4f} seconds\n")
 
-        # Measure the memory usage after inference
+        # Measure the CPU memory usage after inference
         mem_after = process.memory_info().rss / 1024 / 1024  # in MB
-
-        # Print the memory usage
         mem_used = mem_after - mem_before
-
-        # import subprocess
-        # # Get the PID of the Python process
-        # pid = str(subprocess.Popen(['pgrep', '-f', 'python'], stdout=subprocess.PIPE).communicate()[0]).split()[0][2:]
-        # # Call nvidia-smi to get the GPU memory usage for the process
-        # output = subprocess.check_output(['nvidia-smi', '--query-compute-apps=pid,used_gpu_memory', '--format=csv'], encoding='utf-8')
-        # lines = output.strip().split('\n')[1:]
-        # gpu_memory_usage = [int(line.strip().split(',')[1].split()[0]) for line in lines if line.strip().split(',')[0] == pid]
-
         
-        
-        print(f"Memory used: {mem_used:.2f} MB")
-        # print(f"GPU memory used: {gpu_memory_usage[0] / 1024**2:.2f} MB")
-
-        with open('performance_measurement.txt', 'a') as f:
-            f.write(f"Memory: {mem_used:.2f} MB\n")
-            # f.write(f"GPU memory: {gpu_memory_usage[0] / 1024**2:.2f} MB\n")
+        print(f"====================================================================================")
+        print(f"CPU Memory used: {mem_used:.2f} MB")
+        print(f"GPU Memory allocated: {torch.cuda.memory_allocated(device) / 1024**2:.2f} MB")
+        print(f"GPU Max memory allocated: {torch.cuda.max_memory_allocated(device) / 1024**2:.2f} MB")
+        print(f"GPU Memory reserved: {torch.cuda.memory_reserved(device) / 1024**2:.2f} MB")
+        print(f"====================================================================================")
 
         output_paths = []
         for i, sample in enumerate(output.images):

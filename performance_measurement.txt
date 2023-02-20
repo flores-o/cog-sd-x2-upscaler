@@ -27,3 +27,48 @@ with xformers
 self.pipe = (... torch_dtype=torch.float16 
 Latency: 5.8370 seconds
 Memory: 1270.08 MB
+
+with xformers 
+self.pipe = (... torch_dtype=torch.float16 
+Latency: 5.8061 seconds
+Memory: 1263.89 MB
+
+with xformers 
+self.pipe = (... torch_dtype=torch.float16 
+Latency: 5.8498 seconds
+Memory: 422.29 MB
+
+with xformers 
+self.pipe = (... torch_dtype=torch.float16 
+Latency: 5.9064 seconds
+Memory: 424.23 MB
+
+with xformers 
+self.pipe = (... torch_dtype=torch.float16 
+Latency: 5.7768 seconds
+Memory: 921.27 MB
+
+with xformers 
+self.pipe = (... torch_dtype=torch.float16 
+Latency: 5.7280 seconds
+Memory: 917.07 MB
+
+with xformers 
+self.pipe = (... torch_dtype=torch.float16 
+Latency: 5.7862 seconds
+Memory: 1085.59 MB
+
+with xformers 
+self.pipe = (... torch_dtype=torch.float16 
+Latency: 5.8461 seconds
+Memory: 1283.53 MB
+
+with xformers 
+self.pipe = (... torch_dtype=torch.float16 
+Latency: 5.8917 seconds
+Memory: 427.82 MB
+
+with xformers 
+self.pipe = (... torch_dtype=torch.float16 
+Latency: 5.8710 seconds
+Memory: 424.98 MB
