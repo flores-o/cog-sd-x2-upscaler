@@ -26,7 +26,7 @@ SAFETY_MODEL_ID = "CompVis/stable-diffusion-safety-checker"
 class Predictor(BasePredictor):
     def setup(self):
         """Load the model into memory to make running multiple predictions efficient"""
-        print("Loading pipeline...")
+        # print("Loading pipeline...")
         safety_checker = StableDiffusionSafetyChecker.from_pretrained(
             SAFETY_MODEL_ID,
             cache_dir=MODEL_CACHE,
@@ -37,6 +37,7 @@ class Predictor(BasePredictor):
             safety_checker=safety_checker,
             cache_dir=MODEL_CACHE,
             local_files_only=True,
+            torch_dtype=torch.float16,
         ).to("cuda")
 
     @torch.inference_mode()
@@ -68,7 +69,7 @@ class Predictor(BasePredictor):
         """Run a single prediction on the model"""
         if seed is None:
             seed = int.from_bytes(os.urandom(2), "big")
-        print(f"Using seed: {seed}")
+        # print(f"Using seed: {seed}")
 
         # if width * height > 786432:
         #     raise ValueError(
@@ -78,6 +79,10 @@ class Predictor(BasePredictor):
         self.pipe.scheduler = make_scheduler(scheduler, self.pipe.scheduler.config)
 
         generator = torch.Generator("cuda").manual_seed(seed)
+
+        # Memory Efficient Attention
+        self.pipe.enable_xformers_memory_efficient_attention()
+
         output = self.pipe(
             prompt=prompt,
             image=Image.open(image),
